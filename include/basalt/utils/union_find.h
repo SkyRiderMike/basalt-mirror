@@ -39,14 +39,6 @@ struct UnionFind {
     return std::numeric_limits<ValueType>::max();
   }
 
-  // Represent the DS/UF forest thanks to two array:
-  // A parent 'pointer tree' where each node holds a reference to its parent
-  // node
-  std::vector<ValueType> m_cc_parent;
-  // A rank array used for union by rank
-  std::vector<ValueType> m_cc_rank;
-  // A 'size array' to know the size of each connected component
-  std::vector<ValueType> m_cc_size;
 
   // Init the UF structure with num_cc nodes
   void InitSets(const ValueType num_cc) {
@@ -91,4 +83,13 @@ struct UnionFind {
       if (m_cc_rank[i] == m_cc_rank[j]) ++m_cc_rank[i];
     }
   }
+
+  // Represent the DS/UF forest thanks to two array:
+  // A parent 'pointer tree' where each node holds a reference to its parent
+  // node
+  std::vector<ValueType> m_cc_parent;
+  // A rank array used for union by rank
+  std::vector<ValueType> m_cc_rank;
+  // A 'size array' to know the size of each connected component
+  std::vector<ValueType> m_cc_size;
 };

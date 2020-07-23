@@ -122,6 +122,8 @@ struct TrackBuilder {
       const ImageFeaturePair& feat = iter.first;
 
       if (tracks[track_id].count(feat.first)) {
+        // this means one point will have two observations on a simple image.
+        // which can be regarded as conflicts.
         problematic_track_id.insert(track_id);
       } else {
         tracks[track_id].insert(feat.first);

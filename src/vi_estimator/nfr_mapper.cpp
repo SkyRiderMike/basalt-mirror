@@ -40,6 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <basalt/vi_estimator/nfr_mapper.h>
 
 #include <basalt/hash_bow/hash_bow.h>
+#include <toolbox/utils/assert.h>
 
 namespace basalt {
 
@@ -336,7 +337,9 @@ void NfrMapper::optimize(int num_iterations) {
         double after_roll_pitch_error = 0;
 
         computeError(after_update_vision_error);
+        std::cout << "******* " << (int)config.mapper_use_factors << std::endl;
         if (config.mapper_use_factors) {
+          // YEE_ASSERT(false);
           computeRelPose(after_rel_error);
           computeRollPitch(after_roll_pitch_error);
         }
@@ -377,7 +380,8 @@ void NfrMapper::optimize(int num_iterations) {
           std::cout << "increased error after update!!!" << std::endl;
         }
       }
-    } else {  // Use Gauss-Newton
+    } 
+    else {  // Use Gauss-Newton
       Eigen::VectorXd Hdiag_lambda = Hdiag * min_lambda;
       for (int i = 0; i < Hdiag_lambda.size(); i++)
         Hdiag_lambda[i] = std::max(Hdiag_lambda[i], min_lambda);

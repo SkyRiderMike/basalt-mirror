@@ -220,6 +220,9 @@ include_directories(${OpenCV_INCLUDE_DIR})
 message(STATUS "Found OpenCV headers in: ${OpenCV_INCLUDE_DIR}")
 message(STATUS "Found OpenCV_LIBS: ${OpenCV_LIBS}")
 
+find_package(TOOLBOX REQUIRED)
+include_directories(${TOOLBOX_INCLUDE_DIRS})
+link_directories(${TOOLBOX_LINK_DIRS})
 
 add_subdirectory(thirdparty)
 
@@ -251,7 +254,9 @@ add_library(basalt SHARED
   src/utils/keypoints.cpp)
 
 
-target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS} PRIVATE rosbag apriltag opengv)
+target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS} 
+                      ${TOOLBOX_LIBRARIES} 
+                      PRIVATE rosbag apriltag opengv)
 
 
 add_executable(basalt_calibrate src/calibrate.cpp src/calibration/cam_calib.cpp)

@@ -91,7 +91,7 @@ VioConfig::VioConfig() {
   mapper_no_factor_weights = false;
   mapper_use_factors = true;
 
-  mapper_use_lm = false;
+  mapper_use_lm = true;
   mapper_lm_lambda_min = 1e-32;
   mapper_lm_lambda_max = 1e2;
 }
