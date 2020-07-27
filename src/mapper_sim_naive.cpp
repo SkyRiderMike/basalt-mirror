@@ -106,7 +106,7 @@ basalt::KeypointVioEstimator::Ptr vio;
 
 // Visualization vars
 std::unordered_map<int64_t, basalt::VioVisualizationData::Ptr> vis_map;
-tbb::concurrent_bounded_queue<basalt::VioVisualizationData::Ptr> out_vis_queue;
+RobotA::utils::ThreadSafeQueue<basalt::VioVisualizationData::Ptr> out_vis_queue;
 RobotA::utils::ThreadSafeQueue<basalt::PoseVelBiasState::Ptr> out_state_queue;
 
 std::vector<pangolin::TypedImage> images;
@@ -225,7 +225,7 @@ int main(int argc, char** argv) {
     basalt::VioVisualizationData::Ptr data;
 
     while (true) {
-      out_vis_queue.pop(data);
+      out_vis_queue.front_pop(data);
 
       if (data.get()) {
         vis_map[data->t_ns] = data;
@@ -565,7 +565,7 @@ void gen_data() {
   }
 
   basalt::MargDataLoader mdl;
-  tbb::concurrent_bounded_queue<basalt::MargData::Ptr> marg_queue;
+  RobotA::utils::ThreadSafeQueue<basalt::MargData::Ptr> marg_queue;
   mdl.out_marg_queue = &marg_queue;
 
   mdl.start(marg_data_path);
@@ -574,7 +574,7 @@ void gen_data() {
 
   while (true) {
     basalt::MargData::Ptr data;
-    marg_queue.pop(data);
+    marg_queue.front_pop(data);
 
     if (data.get()) {
       for (const auto& kv : data->frame_poses) {

@@ -38,6 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <thread>
 
 #include <basalt/utils/imu_types.h>
+#include <toolbox/utils/thread_safe_queue.h>
 
 namespace basalt {
 
@@ -50,13 +51,13 @@ class MargDataSaver {
     saving_thread->join();
     saving_img_thread->join();
   }
-  tbb::concurrent_bounded_queue<MargData::Ptr> in_marg_queue;
+  RobotA::utils::ThreadSafeQueue<MargData::Ptr> in_marg_queue;
 
  private:
   std::shared_ptr<std::thread> saving_thread;
   std::shared_ptr<std::thread> saving_img_thread;
 
-  tbb::concurrent_bounded_queue<OpticalFlowResult::Ptr> save_image_queue;
+  RobotA::utils::ThreadSafeQueue<OpticalFlowResult::Ptr> save_image_queue;
 };
 
 class MargDataLoader {
@@ -68,7 +69,7 @@ class MargDataLoader {
   void start(const std::string& path);
   ~MargDataLoader() { processing_thread->join(); }
 
-  tbb::concurrent_bounded_queue<MargData::Ptr>* out_marg_queue;
+  RobotA::utils::ThreadSafeQueue<MargData::Ptr>* out_marg_queue;
 
  private:
   std::shared_ptr<std::thread> processing_thread;

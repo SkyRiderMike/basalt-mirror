@@ -49,7 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <pangolin/image/typed_image.h>
 #include <pangolin/pangolin.h>
 
-#include <tbb/concurrent_queue.h>
+
 
 #include <basalt/imu/imu_types.h>
 #include <basalt/optical_flow/optical_flow.h>

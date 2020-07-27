@@ -566,14 +566,14 @@ void load_data(const std::string& calib_path, const std::string& cache_path) {
   nrf_mapper.reset(new basalt::NfrMapper(calib, vio_config));
 
   basalt::MargDataLoader mdl;
-  tbb::concurrent_bounded_queue<basalt::MargData::Ptr> marg_queue;
+  RobotA::utils::ThreadSafeQueue<basalt::MargData::Ptr> marg_queue;
   mdl.out_marg_queue = &marg_queue;
 
   mdl.start(cache_path);
 
   while (true) {
     basalt::MargData::Ptr data;
-    marg_queue.pop(data);
+    marg_queue.front_pop(data);
 
     if (data.get()) {
       int64_t t_ns = *data->kfs_to_marg.begin();

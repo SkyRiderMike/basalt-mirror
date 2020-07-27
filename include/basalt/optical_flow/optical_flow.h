@@ -47,7 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <toolbox/utils/thread_safe_queue.h>
 
-#include <tbb/concurrent_queue.h>
+
 
 namespace basalt {
 

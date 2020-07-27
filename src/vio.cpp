@@ -117,7 +117,7 @@ pangolin::OpenGlRenderState camera;
 // Visualization variables
 std::unordered_map<int64_t, basalt::VioVisualizationData::Ptr> vis_map;
 
-tbb::concurrent_bounded_queue<basalt::VioVisualizationData::Ptr> out_vis_queue;
+RobotA::utils::ThreadSafeQueue<basalt::VioVisualizationData::Ptr> out_vis_queue;
 RobotA::utils::ThreadSafeQueue<basalt::PoseVelBiasState::Ptr> out_state_queue;
 
 std::vector<int64_t> vio_t_ns;
@@ -315,7 +315,7 @@ int main(int argc, char** argv) {
       basalt::VioVisualizationData::Ptr data;
 
       while (true) {
-        out_vis_queue.pop(data);
+        out_vis_queue.front_pop(data);
 
         if (data.get()) {
           vis_map[data->t_ns] = data;

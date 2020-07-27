@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <toolbox/sophus/se3.hpp>
 
-#include <tbb/concurrent_queue.h>
+
 #include <tbb/global_control.h>
 
 #include <pangolin/display/image_view.h>
@@ -96,7 +96,7 @@ pangolin::Var<bool> follow("ui.follow", true, false, true);
 // Visualization variables
 basalt::VioVisualizationData::Ptr curr_vis_data;
 
-tbb::concurrent_bounded_queue<basalt::VioVisualizationData::Ptr> out_vis_queue;
+RobotA::utils::ThreadSafeQueue<basalt::VioVisualizationData::Ptr> out_vis_queue;
 RobotA::utils::ThreadSafeQueue<basalt::PoseVelBiasState::Ptr> out_state_queue;
 
 std::vector<int64_t> vio_t_ns;
@@ -194,7 +194,7 @@ int main(int argc, char** argv) {
   if (show_gui)
     t3.reset(new std::thread([&]() {
       while (true) {
-        out_vis_queue.pop(curr_vis_data);
+        out_vis_queue.front_pop(curr_vis_data);
 
         if (!curr_vis_data.get()) break;
       }

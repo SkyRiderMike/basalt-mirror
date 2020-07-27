@@ -83,8 +83,8 @@ class VioEstimatorBase {
 
   RobotA::utils::ThreadSafeQueue<PoseVelBiasState::Ptr>* out_state_queue =
       nullptr;
-  tbb::concurrent_bounded_queue<MargData::Ptr>* out_marg_queue = nullptr;
-  tbb::concurrent_bounded_queue<VioVisualizationData::Ptr>* out_vis_queue =
+  RobotA::utils::ThreadSafeQueue<MargData::Ptr>* out_marg_queue = nullptr;
+  RobotA::utils::ThreadSafeQueue<VioVisualizationData::Ptr>* out_vis_queue =
       nullptr;
 
   virtual void initialize(int64_t t_ns, const Sophus::SE3d& T_w_i,

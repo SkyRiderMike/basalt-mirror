@@ -209,8 +209,8 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
       prev_frame = curr_frame;
     }
 
-    if (out_vis_queue) out_vis_queue->push(nullptr);
-    if (out_marg_queue) out_marg_queue->push(nullptr);
+    if (out_vis_queue) out_vis_queue->push_block(nullptr);
+    if (out_marg_queue) out_marg_queue->push_block(nullptr);
     if (out_state_queue) out_state_queue->push_block(nullptr);
 
     finished = true;
@@ -417,7 +417,7 @@ bool KeypointVioEstimator::measure(const OpticalFlowResult::Ptr& opt_flow_meas,
 
     data->opt_flow_res = prev_opt_flow_res[last_state_t_ns];
 
-    out_vis_queue->push(data);
+    out_vis_queue->push_block(data);
   }
 
   last_processed_t_ns = last_state_t_ns;
@@ -631,7 +631,7 @@ void KeypointVioEstimator::marginalize(
           m->opt_flow_res.emplace_back(prev_opt_flow_res.at(t));
         }
 
-        out_marg_queue->push(m);
+        out_marg_queue->push_block(m);
       }
     }
 

@@ -52,7 +52,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-#include <tbb/concurrent_queue.h>
+
 
 #include <basalt/device/rs_t265.h>
 #include <basalt/serialization/headers_serialization.h>

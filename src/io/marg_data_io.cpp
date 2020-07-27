@@ -57,7 +57,7 @@ MargDataSaver::MargDataSaver(const std::string& path) {
     std::unordered_set<int64_t> processed_opt_flow;
 
     while (true) {
-      in_marg_queue.pop(data);
+      in_marg_queue.front_pop(data);
 
       if (data.get()) {
         int64_t kf_id = *data->kfs_to_marg.begin();
@@ -73,13 +73,13 @@ MargDataSaver::MargDataSaver(const std::string& path) {
 
         for (const auto& d : data->opt_flow_res) {
           if (processed_opt_flow.count(d->t_ns) == 0) {
-            save_image_queue.push(d);
+            save_image_queue.push_block(d);
             processed_opt_flow.emplace(d->t_ns);
           }
         }
 
       } else {
-        save_image_queue.push(nullptr);
+        save_image_queue.push_block(nullptr);
         break;
       }
     }
@@ -91,7 +91,7 @@ MargDataSaver::MargDataSaver(const std::string& path) {
     basalt::OpticalFlowResult::Ptr data;
 
     while (true) {
-      save_image_queue.pop(data);
+      save_image_queue.front_pop(data);
 
       if (data.get()) {
         std::string p = img_path + "/" + std::to_string(data->t_ns) + ".cereal";
@@ -169,10 +169,10 @@ void MargDataLoader::start(const std::string& path) {
         data->opt_flow_res.emplace_back(opt_flow_res.at(d));
       }
 
-      out_marg_queue->push(data);
+      out_marg_queue->push_block(data);
     }
 
-    out_marg_queue->push(nullptr);
+    out_marg_queue->push_block(nullptr);
 
     std::cout << "Finished MargDataLoader" << std::endl;
   };
