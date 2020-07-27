@@ -94,7 +94,7 @@ class RsT265Device {
   RobotA::utils::ThreadSafeQueue<OpticalFlowInput::Ptr>* image_data_queue =
       nullptr;
   RobotA::utils::ThreadSafeQueue<ImuData::Ptr>* imu_data_queue = nullptr;
-  tbb::concurrent_bounded_queue<RsPoseData>* pose_data_queue = nullptr;
+  RobotA::utils::ThreadSafeQueue<RsPoseData>* pose_data_queue = nullptr;
 
  private:
   bool manual_exposure;

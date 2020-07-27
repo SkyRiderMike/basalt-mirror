@@ -120,7 +120,7 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
         calib.dicrete_time_gyro_noise_std().array().square();
 
     ImuData::Ptr data;
-    imu_data_queue.pop(data);
+    imu_data_queue.front_pop(data);
     data->accel = calib.calib_accel_bias.getCalibrated(data->accel);
     data->gyro = calib.calib_gyro_bias.getCalibrated(data->gyro);
 
@@ -141,7 +141,7 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
 
       if (!initialized) {
         while (data->t_ns < curr_frame->t_ns) {
-          imu_data_queue.pop(data);
+          imu_data_queue.front_pop(data);
           if (!data.get()) break;
           data->accel = calib.calib_accel_bias.getCalibrated(data->accel);
           data->gyro = calib.calib_gyro_bias.getCalibrated(data->gyro);
@@ -182,7 +182,7 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
             last_state.getState().bias_accel));
 
         while (data->t_ns <= prev_frame->t_ns) {
-          imu_data_queue.pop(data);
+          imu_data_queue.front_pop(data);
           if (!data.get()) break;
           data->accel = calib.calib_accel_bias.getCalibrated(data->accel);
           data->gyro = calib.calib_gyro_bias.getCalibrated(data->gyro);
@@ -190,7 +190,7 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
 
         while (data->t_ns <= curr_frame->t_ns) {
           meas->integrate(*data, accel_cov, gyro_cov);
-          imu_data_queue.pop(data);
+          imu_data_queue.front_pop(data);
           if (!data.get()) break;
           data->accel = calib.calib_accel_bias.getCalibrated(data->accel);
           data->gyro = calib.calib_gyro_bias.getCalibrated(data->gyro);
@@ -211,7 +211,7 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
 
     if (out_vis_queue) out_vis_queue->push(nullptr);
     if (out_marg_queue) out_marg_queue->push(nullptr);
-    if (out_state_queue) out_state_queue->push(nullptr);
+    if (out_state_queue) out_state_queue->push_block(nullptr);
 
     finished = true;
 
@@ -222,7 +222,7 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
 }
 
 void KeypointVioEstimator::addIMUToQueue(const ImuData::Ptr& data) {
-  imu_data_queue.emplace(data);
+  imu_data_queue.push_block(data);
 }
 
 void KeypointVioEstimator::addVisionToQueue(
@@ -394,7 +394,7 @@ bool KeypointVioEstimator::measure(const OpticalFlowResult::Ptr& opt_flow_meas,
 
     PoseVelBiasState::Ptr data(new PoseVelBiasState(p.getState()));
 
-    out_state_queue->push(data);
+    out_state_queue->push_block(data);
   }
 
   if (out_vis_queue) {

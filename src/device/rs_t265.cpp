@@ -139,7 +139,7 @@ void RsT265Device::start() {
             data->accel = accel_interpolated;
             data->gyro = gyro_data.data;
 
-            if (imu_data_queue) imu_data_queue->push(data);
+            if (imu_data_queue) imu_data_queue->push_block(data);
           }
 
           prev_accel_data.reset(new RsIMUData(d));
@@ -194,7 +194,7 @@ void RsT265Device::start() {
 
       pdata.data = Sophus::SE3d(quat, trans);
 
-      if (pose_data_queue) pose_data_queue->push(pdata);
+      if (pose_data_queue) pose_data_queue->push_block(pdata);
     }
   };
 
@@ -203,7 +203,7 @@ void RsT265Device::start() {
 
 void RsT265Device::stop() {
   if (image_data_queue) image_data_queue->push_block(nullptr);
-  if (imu_data_queue) imu_data_queue->push(nullptr);
+  if (imu_data_queue) imu_data_queue->push_block(nullptr);
 }
 
 bool RsT265Device::setExposure(double exposure) {

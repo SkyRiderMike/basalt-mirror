@@ -123,7 +123,7 @@ void KeypointVoEstimator::initialize(const Eigen::Vector3d& bg,
 
       while (!imu_data_queue.empty()) {
         ImuData::Ptr d;
-        imu_data_queue.pop(d);
+        imu_data_queue.front_pop(d);
       }
 
       if (!initialized) {
@@ -155,7 +155,7 @@ void KeypointVoEstimator::initialize(const Eigen::Vector3d& bg,
 
     if (out_vis_queue) out_vis_queue->push(nullptr);
     if (out_marg_queue) out_marg_queue->push(nullptr);
-    if (out_state_queue) out_state_queue->push(nullptr);
+    if (out_state_queue) out_state_queue->push_block(nullptr);
 
     finished = true;
 
@@ -325,7 +325,7 @@ bool KeypointVoEstimator::measure(const OpticalFlowResult::Ptr& opt_flow_meas,
         new PoseVelBiasState(p.getT_ns(), p.getPose(), Eigen::Vector3d::Zero(),
                              Eigen::Vector3d::Zero(), Eigen::Vector3d::Zero()));
 
-    out_state_queue->push(data);
+    out_state_queue->push_block(data);
   }
 
   if (out_vis_queue) {

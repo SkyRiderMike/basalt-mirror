@@ -97,7 +97,7 @@ pangolin::Var<bool> follow("ui.follow", true, false, true);
 basalt::VioVisualizationData::Ptr curr_vis_data;
 
 tbb::concurrent_bounded_queue<basalt::VioVisualizationData::Ptr> out_vis_queue;
-tbb::concurrent_bounded_queue<basalt::PoseVelBiasState::Ptr> out_state_queue;
+RobotA::utils::ThreadSafeQueue<basalt::PoseVelBiasState::Ptr> out_state_queue;
 
 std::vector<int64_t> vio_t_ns;
 Eigen::aligned_vector<Eigen::Vector3d> vio_t_w_i;
@@ -206,7 +206,7 @@ int main(int argc, char** argv) {
     basalt::PoseVelBiasState::Ptr data;
 
     while (true) {
-      out_state_queue.pop(data);
+      out_state_queue.front_pop(data);
 
       if (!data.get()) break;
 

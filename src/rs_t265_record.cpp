@@ -72,8 +72,8 @@ pangolin::Var<float> exposure("ui.exposure", 5.0, 1, 20);
 
 RobotA::utils::ThreadSafeQueue<basalt::OpticalFlowInput::Ptr> image_data_queue,
     image_data_queue2;
-tbb::concurrent_bounded_queue<basalt::ImuData::Ptr> imu_data_queue;
-tbb::concurrent_bounded_queue<basalt::RsPoseData> pose_data_queue;
+RobotA::utils::ThreadSafeQueue<basalt::ImuData::Ptr> imu_data_queue;
+RobotA::utils::ThreadSafeQueue<basalt::RsPoseData> pose_data_queue;
 
 std::atomic<bool> stop_workers;
 std::atomic<bool> recording;
