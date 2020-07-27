@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
 
-#include <sophus/se3.hpp>
+#include <toolbox/sophus/se3.hpp>
 
 #include <basalt/utils/imu_types.h>
 

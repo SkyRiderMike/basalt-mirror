@@ -406,3 +406,25 @@ TEST(VioTestSuite, LinearizePointsTest) {
         x0);
   }
 }
+
+TEST(VioTestSuite, StereoGraphicParamTest){
+  basalt::ExtendedUnifiedCamera<double> cam =
+      basalt::ExtendedUnifiedCamera<double>::getTestProjections()[0];
+
+  basalt::KeypointPosition kpt_pos;
+
+  Eigen::Vector4d point3d;
+  cam.unproject(Eigen::Vector2d::Random() * 50, point3d);
+
+  kpt_pos.dir = basalt::StereographicParam<double>::project(point3d);
+  kpt_pos.id = 0.1231231;
+
+  Eigen::Vector4d p_trans;
+  p_trans = basalt::StereographicParam<double>::unproject(kpt_pos.dir);
+  p_trans(3) = kpt_pos.id;
+
+  std::cout << "vec trans: " << p_trans.transpose() << std::endl;
+  std::cout << "dir: " << kpt_pos.dir.transpose() << std::endl;
+
+
+}

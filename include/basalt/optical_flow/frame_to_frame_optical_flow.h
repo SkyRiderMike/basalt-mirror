@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <thread>
 
-#include <sophus/se2.hpp>
+#include <toolbox/sophus/se2.hpp>
 
 #include <tbb/blocked_range.h>
 #include <tbb/concurrent_unordered_map.h>

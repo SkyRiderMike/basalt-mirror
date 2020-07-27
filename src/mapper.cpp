@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iostream>
 #include <thread>
 
-#include <sophus/se3.hpp>
+#include <toolbox/sophus/se3.hpp>
 
 #include <tbb/concurrent_unordered_map.h>
 
@@ -49,7 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <pangolin/image/typed_image.h>
 #include <pangolin/pangolin.h>
 
-#include <CLI/CLI.hpp>
+#include <toolbox/CLI/CLI.hpp>
 
 #include <basalt/io/dataset_io.h>
 #include <basalt/io/marg_data_io.h>

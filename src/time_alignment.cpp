@@ -45,7 +45,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <basalt/utils/filesystem.h>
 #include <basalt/calibration/calibration.hpp>
 
-#include <CLI/CLI.hpp>
+#include <toolbox/CLI/CLI.hpp>
 
 basalt::Calibration<double> calib;
 basalt::MocapCalibration<double> mocap_calib;

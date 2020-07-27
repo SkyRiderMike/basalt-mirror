@@ -340,8 +340,8 @@ void NfrMapper::optimize(int num_iterations) {
         std::cout << "******* " << (int)config.mapper_use_factors << std::endl;
         if (config.mapper_use_factors) {
           // YEE_ASSERT(false);
-          computeRelPose(after_rel_error);
-          computeRollPitch(after_roll_pitch_error);
+          // computeRelPose(after_rel_error);
+          // computeRollPitch(after_roll_pitch_error);
         }
 
         double after_error_total = after_update_vision_error + after_rel_error +
@@ -669,6 +669,10 @@ void NfrMapper::match_all() {
             << std::endl;
 }
 
+/*
+input : feature_matches
+output : feature_tracks 
+ */
 void NfrMapper::build_tracks() {
   TrackBuilder trackBuilder;
   // Build: Efficient fusion of correspondences
@@ -694,11 +698,13 @@ void NfrMapper::build_tracks() {
             << total_track_obs_count / (double)feature_tracks.size() << "."
             << std::endl;
 }
-
+/* 
+input: feature_tracks
+ouput: lmdb
+ */
 void NfrMapper::setup_opt() {
   const double min_triang_distance2 = config.mapper_min_triangulation_dist *
                                       config.mapper_min_triangulation_dist;
-
   for (const auto& kv : feature_tracks) {
     if (kv.second.size() < 2) continue;
 

@@ -77,7 +77,8 @@ struct UnionFind {
       m_cc_parent[i] = j;
       m_cc_size[j] += m_cc_size[i];
 
-    } else {
+    } 
+    else {
       m_cc_parent[j] = i;
       m_cc_size[i] += m_cc_size[j];
       if (m_cc_rank[i] == m_cc_rank[j]) ++m_cc_rank[i];

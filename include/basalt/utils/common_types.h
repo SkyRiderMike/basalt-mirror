@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <Eigen/Core>
 #include <Eigen/StdVector>
-#include <sophus/se3.hpp>
+#include <toolbox/sophus/se3.hpp>
 
 #include <basalt/utils/hash.h>
 #include <basalt/utils/sophus_utils.hpp>

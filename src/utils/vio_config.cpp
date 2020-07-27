@@ -37,8 +37,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <fstream>
 
-#include <cereal/archives/json.hpp>
-#include <cereal/cereal.hpp>
+#include <toolbox/cereal/archives/json.hpp>
+#include <toolbox/cereal/cereal.hpp>
 
 namespace basalt {
 

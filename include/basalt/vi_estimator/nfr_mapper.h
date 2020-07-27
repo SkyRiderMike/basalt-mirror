@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <thread>
 
 #include <Eigen/Dense>
-#include <sophus/se3.hpp>
+#include <toolbox/sophus/se3.hpp>
 
 #include <basalt/utils/common_types.h>
 #include <basalt/vi_estimator/ba_base.h>

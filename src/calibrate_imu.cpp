@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <basalt/calibration/cam_imu_calib.h>
 
-#include <CLI/CLI.hpp>
+#include <toolbox/CLI/CLI.hpp>
 
 int main(int argc, char **argv) {
   std::string dataset_path;

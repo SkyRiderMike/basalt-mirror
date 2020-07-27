@@ -227,10 +227,7 @@ link_directories(${TOOLBOX_LINK_DIRS})
 add_subdirectory(thirdparty)
 
 
-include_directories(thirdparty/basalt-headers/thirdparty/Sophus)
-include_directories(thirdparty/basalt-headers/thirdparty/cereal/include)
 include_directories(thirdparty/basalt-headers/include)
-include_directories(thirdparty/CLI11/include)
 include_directories(thirdparty/fast/include)
 
 include_directories(include)
@@ -239,9 +236,6 @@ include_directories(include)
 add_library(basalt SHARED
   src/io/dataset_io.cpp
   src/io/marg_data_io.cpp
-  src/calibration/aprilgrid.cpp
-  src/calibration/calibraiton_helper.cpp
-  src/calibration/vignette.cpp
   src/utils/vio_config.cpp
   src/optical_flow/optical_flow.cpp
   src/vi_estimator/keypoint_vio.cpp
@@ -256,14 +250,15 @@ add_library(basalt SHARED
 
 target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS} 
                       ${TOOLBOX_LIBRARIES} 
-                      PRIVATE rosbag apriltag opengv)
+                      PRIVATE rosbag 
+                      opengv)
 
 
-add_executable(basalt_calibrate src/calibrate.cpp src/calibration/cam_calib.cpp)
-target_link_libraries(basalt_calibrate basalt pangolin)
+# add_executable(basalt_calibrate src/calibrate.cpp src/calibration/cam_calib.cpp)
+# target_link_libraries(basalt_calibrate basalt pangolin)
 
-add_executable(basalt_calibrate_imu src/calibrate_imu.cpp src/calibration/cam_imu_calib.cpp)
-target_link_libraries(basalt_calibrate_imu basalt pangolin)
+# add_executable(basalt_calibrate_imu src/calibrate_imu.cpp src/calibration/cam_imu_calib.cpp)
+# target_link_libraries(basalt_calibrate_imu basalt pangolin)
 
 
 add_executable(basalt_vio_sim src/vio_sim.cpp)
@@ -302,7 +297,18 @@ endif()
 
 
 
-install(TARGETS basalt_calibrate basalt_calibrate_imu basalt_vio_sim basalt_mapper_sim basalt_mapper_sim_naive basalt_mapper basalt_opt_flow basalt_vio basalt_kitti_eval basalt_time_alignment basalt
+install(TARGETS 
+      # basalt_calibrate 
+      # basalt_calibrate_imu 
+      basalt_vio_sim 
+      basalt_mapper_sim 
+      basalt_mapper_sim_naive 
+      basalt_mapper 
+      basalt_opt_flow 
+      basalt_vio 
+      basalt_kitti_eval 
+      basalt_time_alignment 
+      basalt
   EXPORT BasaltTargets
   RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
   LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib

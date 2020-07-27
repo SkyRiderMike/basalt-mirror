@@ -184,7 +184,8 @@ void BundleAdjustmentBase::computeError(
             },
             calib.intrinsics[tcid_t.cam_id].variant);
 
-      } else {
+      } 
+      else {
         // target and host are the same
         // residual does not depend on the pose
         // it just depends on the point

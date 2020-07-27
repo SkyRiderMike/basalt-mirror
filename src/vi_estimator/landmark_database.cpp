@@ -34,10 +34,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #include <basalt/vi_estimator/landmark_database.h>
+#include <toolbox/utils/assert.h>
 
 namespace basalt {
 
-void LandmarkDatabase::addLandmark(int lm_id, const KeypointPosition &pos) {
+void LandmarkDatabase::addLandmark(int/* track id */ lm_id, const KeypointPosition &pos) {
   kpts[lm_id] = pos;
   host_to_kpts[pos.kf_id].emplace(lm_id);
 }
@@ -46,10 +47,11 @@ void LandmarkDatabase::removeFrame(const FrameId &frame) {
   for (auto it = obs.begin(); it != obs.end(); ++it) {
     for (auto it2 = it->second.cbegin(); it2 != it->second.cend();) {
       if (it2->first.frame_id == frame) {
-        for (const auto &v : it2->second) kpts_num_obs.at(v.kpt_id)--;
-
+        for (const auto &v : it2->second) 
+          kpts_num_obs.at(v.kpt_id)--;
         it2 = it->second.erase(it2);
-      } else {
+      } 
+      else {
         ++it2;
       }
     }
@@ -119,13 +121,20 @@ std::vector<KeypointPosition> LandmarkDatabase::getLandmarksForHost(
   return res;
 }
 
-void LandmarkDatabase::addObservation(const TimeCamId &tcid_target,
+std::vector<std::pair<int, KeypointPosition>> LandmarkDatabase::getLandmarkIDPosForHost(const TimeCamId& tcid) const {
+  std::vector<std::pair<int, KeypointPosition>> res;
+  for (const auto &trace_id : host_to_kpts.at(tcid)) 
+    res.emplace_back(std::make_pair(trace_id, kpts.at(trace_id)));
+  return res;
+}
+
+void LandmarkDatabase::addObservation(const TimeCamId/* frame id */ &tcid_target,
                                       const KeypointObservation &o) {
   auto it = kpts.find(o.kpt_id);
   BASALT_ASSERT(it != kpts.end());
 
   auto &obs_vec = obs[it->second.kf_id][tcid_target];
-
+ 
   // Check that the point observation is inserted only once
   for (const auto &oo : obs_vec) {
     BASALT_ASSERT(oo.kpt_id != o.kpt_id);
@@ -158,7 +167,9 @@ bool LandmarkDatabase::landmarkExists(int lm_id) const {
 
 size_t LandmarkDatabase::numLandmarks() const { return kpts.size(); }
 
-int LandmarkDatabase::numObservations() const { return num_observations; }
+int LandmarkDatabase::numObservations() const { 
+  return num_observations; 
+}
 
 int LandmarkDatabase::numObservations(int lm_id) const {
   return kpts_num_obs.at(lm_id);

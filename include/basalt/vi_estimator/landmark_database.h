@@ -40,9 +40,9 @@ namespace basalt {
 
 // keypoint position defined relative to some frame
 struct KeypointPosition {
-  TimeCamId kf_id;
+  TimeCamId kf_id;/* host frame id */
   Eigen::Vector2d dir;
-  double id;
+  double id;/* inverse depth */
 
   inline void backup() {
     backup_dir = dir;
@@ -62,8 +62,8 @@ struct KeypointPosition {
 };
 
 struct KeypointObservation {
-  int kpt_id;
-  Eigen::Vector2d pos;
+  int kpt_id; /* tracklet id */
+  Eigen::Vector2d pos; /* uv */
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 };
@@ -71,7 +71,7 @@ struct KeypointObservation {
 class LandmarkDatabase {
  public:
   // Non-const
-  void addLandmark(int lm_id, const KeypointPosition& pos);
+  void addLandmark(int/* TrackLet id */ lm_id, const KeypointPosition& pos);
 
   void removeFrame(const FrameId& frame);
 
@@ -90,6 +90,9 @@ class LandmarkDatabase {
   std::vector<TimeCamId> getHostKfs() const;
 
   std::vector<KeypointPosition> getLandmarksForHost(
+      const TimeCamId& tcid) const;
+
+  std::vector<std::pair<int, KeypointPosition>> getLandmarkIDPosForHost(
       const TimeCamId& tcid) const;
 
   const Eigen::aligned_map<
@@ -118,7 +121,7 @@ class LandmarkDatabase {
   }
 
  private:
-  Eigen::aligned_unordered_map<int, KeypointPosition> kpts;
+  Eigen::aligned_unordered_map<int/* tracklet id */, KeypointPosition> kpts;
   Eigen::aligned_map<
       TimeCamId,
       Eigen::aligned_map<TimeCamId, Eigen::aligned_vector<KeypointObservation>>>

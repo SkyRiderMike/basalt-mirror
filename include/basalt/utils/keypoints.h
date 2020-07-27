@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <set>
 
 #include <Eigen/Dense>
-#include <sophus/se3.hpp>
+#include <toolbox/sophus/se3.hpp>
 
 #include <basalt/image/image.h>
 #include <basalt/utils/sophus_utils.hpp>

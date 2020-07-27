@@ -33,12 +33,12 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <CLI/CLI.hpp>
+#include <toolbox/CLI/CLI.hpp>
 
 #include <basalt/utils/sophus_utils.hpp>
 
-#include <cereal/archives/json.hpp>
-#include <cereal/types/string.hpp>
+#include <toolbox/cereal/archives/json.hpp>
+#include <toolbox/cereal/types/string.hpp>
 
 namespace cereal {
 

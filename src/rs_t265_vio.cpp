@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory>
 #include <thread>
 
-#include <sophus/se3.hpp>
+#include <toolbox/sophus/se3.hpp>
 
 #include <tbb/concurrent_queue.h>
 #include <tbb/global_control.h>
@@ -52,7 +52,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <pangolin/image/typed_image.h>
 #include <pangolin/pangolin.h>
 
-#include <CLI/CLI.hpp>
+#include <toolbox/CLI/CLI.hpp>
 
 #include <basalt/device/rs_t265.h>
 #include <basalt/io/dataset_io.h>

@@ -42,18 +42,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-#include <cereal/archives/binary.hpp>
-#include <cereal/archives/json.hpp>
-#include <cereal/types/bitset.hpp>
-#include <cereal/types/deque.hpp>
-#include <cereal/types/map.hpp>
-#include <cereal/types/memory.hpp>
-#include <cereal/types/polymorphic.hpp>
-#include <cereal/types/set.hpp>
-#include <cereal/types/string.hpp>
-#include <cereal/types/unordered_map.hpp>
-#include <cereal/types/utility.hpp>
-#include <cereal/types/vector.hpp>
+#include <toolbox/cereal/archives/binary.hpp>
+#include <toolbox/cereal/archives/json.hpp>
+#include <toolbox/cereal/types/bitset.hpp>
+#include <toolbox/cereal/types/deque.hpp>
+#include <toolbox/cereal/types/map.hpp>
+#include <toolbox/cereal/types/memory.hpp>
+#include <toolbox/cereal/types/polymorphic.hpp>
+#include <toolbox/cereal/types/set.hpp>
+#include <toolbox/cereal/types/string.hpp>
+#include <toolbox/cereal/types/unordered_map.hpp>
+#include <toolbox/cereal/types/utility.hpp>
+#include <toolbox/cereal/types/vector.hpp>
 
 #include <Eigen/Dense>
 #include <basalt/utils/sophus_utils.hpp>

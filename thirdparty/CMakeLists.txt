@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
 add_subdirectory(ros EXCLUDE_FROM_ALL)
-add_subdirectory(apriltag EXCLUDE_FROM_ALL)
 
 
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Enable BUILD_SHARED_LIBS")
@@ -37,7 +36,7 @@ add_subdirectory(Pangolin EXCLUDE_FROM_ALL)
 
 
 # fix aprilgrid
-target_compile_options(apriltag PRIVATE "-Wno-unused-private-field")
+# target_compile_options(apriltag PRIVATE "-Wno-unused-private-field")
 
 # fix opengv: c++17 and debug postfix
 set_target_properties(opengv PROPERTIES
