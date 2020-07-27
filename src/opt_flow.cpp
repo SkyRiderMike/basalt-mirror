@@ -39,6 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <thread>
 
 #include <toolbox/sophus/se3.hpp>
+#include <toolbox/utils/thread_safe_queue.h>
 
 #include <tbb/concurrent_unordered_map.h>
 
@@ -85,7 +86,7 @@ basalt::OpticalFlowBase::Ptr opt_flow_ptr;
 tbb::concurrent_unordered_map<int64_t, basalt::OpticalFlowResult::Ptr,
                               std::hash<int64_t>>
     observations;
-tbb::concurrent_bounded_queue<basalt::OpticalFlowResult::Ptr>
+RobotA::utils::ThreadSafeQueue<basalt::OpticalFlowResult::Ptr>
     observations_queue;
 
 basalt::Calibration<double> calib;
@@ -101,12 +102,12 @@ void feed_images() {
     data->t_ns = vio_dataset->get_image_timestamps()[i];
     data->img_data = vio_dataset->get_image_data(data->t_ns);
 
-    opt_flow_ptr->input_queue.push(data);
+    opt_flow_ptr->input_queue.push_block(data);
   }
 
   // Indicate the end of the sequence
   basalt::OpticalFlowInput::Ptr data;
-  opt_flow_ptr->input_queue.push(data);
+  opt_flow_ptr->input_queue.push_block(data);
 
   std::cout << "Finished input_data thread " << std::endl;
 }
@@ -117,7 +118,7 @@ void read_result() {
   basalt::OpticalFlowResult::Ptr res;
 
   while (true) {
-    observations_queue.pop(res);
+    observations_queue.front_pop(res);
     if (!res.get()) break;
 
     res->input_images.reset();

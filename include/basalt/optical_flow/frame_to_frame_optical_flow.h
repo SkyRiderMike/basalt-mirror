@@ -70,7 +70,7 @@ class FrameToFrameOpticalFlow : public OpticalFlowBase {
   FrameToFrameOpticalFlow(const VioConfig& config,
                           const basalt::Calibration<double>& calib)
       : t_ns(-1), frame_counter(0), last_keypoint_id(0), config(config) {
-    input_queue.set_capacity(10);
+    // input_queue.set_capacity(10);
 
     this->calib = calib.cast<Scalar>();
 
@@ -93,10 +93,10 @@ class FrameToFrameOpticalFlow : public OpticalFlowBase {
     OpticalFlowInput::Ptr input_ptr;
 
     while (true) {
-      input_queue.pop(input_ptr);
+      input_queue.front_pop(input_ptr);
 
       if (!input_ptr.get()) {
-        if (output_queue) output_queue->push(nullptr);
+        if (output_queue) output_queue->push_block(nullptr);
         break;
       }
 
@@ -168,7 +168,7 @@ class FrameToFrameOpticalFlow : public OpticalFlowBase {
     }
 
     if (output_queue && frame_counter % config.optical_flow_skip_frames == 0) {
-      output_queue->push(transforms);
+      output_queue->push_block(transforms);
     }
 
     frame_counter++;

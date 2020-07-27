@@ -239,10 +239,10 @@ int main(int argc, char** argv) {
         }
       }
 
-      vio->vision_data_queue.push(data);
+      vio->vision_data_queue.push_force(data);
     }
 
-    vio->vision_data_queue.push(nullptr);
+    vio->vision_data_queue.push_force(nullptr);
 
     std::cout << "Finished t1" << std::endl;
   });

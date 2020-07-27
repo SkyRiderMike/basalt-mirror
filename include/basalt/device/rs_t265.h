@@ -43,6 +43,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <mutex>
 #include <thread>
 
+#include <toolbox/utils/thread_safe_queue.h>
 #include <librealsense2/rs.hpp>
 
 #include <pangolin/image/typed_image.h>
@@ -90,9 +91,9 @@ class RsT265Device {
   std::shared_ptr<basalt::Calibration<double>> exportCalibration();
 
   OpticalFlowInput::Ptr last_img_data;
-  tbb::concurrent_bounded_queue<OpticalFlowInput::Ptr>* image_data_queue =
+  RobotA::utils::ThreadSafeQueue<OpticalFlowInput::Ptr>* image_data_queue =
       nullptr;
-  tbb::concurrent_bounded_queue<ImuData::Ptr>* imu_data_queue = nullptr;
+  RobotA::utils::ThreadSafeQueue<ImuData::Ptr>* imu_data_queue = nullptr;
   tbb::concurrent_bounded_queue<RsPoseData>* pose_data_queue = nullptr;
 
  private:

@@ -74,7 +74,7 @@ class PatchOpticalFlow : public OpticalFlowBase {
         config(config),
         calib(calib) {
     patches.reserve(3000);
-    input_queue.set_capacity(10);
+    // input_queue.set_capacity(10);
 
     patch_coord = PatchT::pattern2.template cast<float>();
 
@@ -93,10 +93,10 @@ class PatchOpticalFlow : public OpticalFlowBase {
     OpticalFlowInput::Ptr input_ptr;
 
     while (true) {
-      input_queue.pop(input_ptr);
+      input_queue.front_pop(input_ptr);
 
       if (!input_ptr.get()) {
-        output_queue->push(nullptr);
+        output_queue->push_block(nullptr);
         break;
       }
 
@@ -159,7 +159,7 @@ class PatchOpticalFlow : public OpticalFlowBase {
     }
 
     if (output_queue && frame_counter % config.optical_flow_skip_frames == 0) {
-      output_queue->push(transforms);
+      output_queue->push_block(transforms);
     }
     frame_counter++;
   }

@@ -107,11 +107,11 @@ void KeypointVoEstimator::initialize(const Eigen::Vector3d& bg,
     bool add_pose = false;
 
     while (true) {
-      vision_data_queue.pop(curr_frame);
+      vision_data_queue.front_pop(curr_frame);
 
       if (config.vio_enforce_realtime) {
         // drop current frame if another frame is already in the queue.
-        while (!vision_data_queue.empty()) vision_data_queue.pop(curr_frame);
+        while (!vision_data_queue.empty()) vision_data_queue.front_pop(curr_frame);
       }
 
       if (!curr_frame.get()) {
@@ -166,7 +166,7 @@ void KeypointVoEstimator::initialize(const Eigen::Vector3d& bg,
 }
 
 void KeypointVoEstimator::addVisionToQueue(const OpticalFlowResult::Ptr& data) {
-  vision_data_queue.push(data);
+  vision_data_queue.push_block(data);
 }
 
 bool KeypointVoEstimator::measure(const OpticalFlowResult::Ptr& opt_flow_meas,

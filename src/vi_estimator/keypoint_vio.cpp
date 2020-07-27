@@ -125,11 +125,11 @@ void KeypointVioEstimator::initialize(const Eigen::Vector3d& bg,
     data->gyro = calib.calib_gyro_bias.getCalibrated(data->gyro);
 
     while (true) {
-      vision_data_queue.pop(curr_frame);
+      vision_data_queue.front_pop(curr_frame);
 
       if (config.vio_enforce_realtime) {
         // drop current frame if another frame is already in the queue.
-        while (!vision_data_queue.empty()) vision_data_queue.pop(curr_frame);
+        while (!vision_data_queue.empty()) vision_data_queue.front_pop(curr_frame);
       }
 
       if (!curr_frame.get()) {
@@ -227,7 +227,7 @@ void KeypointVioEstimator::addIMUToQueue(const ImuData::Ptr& data) {
 
 void KeypointVioEstimator::addVisionToQueue(
     const OpticalFlowResult::Ptr& data) {
-  vision_data_queue.push(data);
+  vision_data_queue.push_block(data);
 }
 
 bool KeypointVioEstimator::measure(const OpticalFlowResult::Ptr& opt_flow_meas,

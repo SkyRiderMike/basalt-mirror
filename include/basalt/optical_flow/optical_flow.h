@@ -45,6 +45,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <basalt/camera/stereographic_param.hpp>
 #include <basalt/utils/sophus_utils.hpp>
 
+#include <toolbox/utils/thread_safe_queue.h>
+
 #include <tbb/concurrent_queue.h>
 
 namespace basalt {
@@ -72,8 +74,8 @@ class OpticalFlowBase {
  public:
   using Ptr = std::shared_ptr<OpticalFlowBase>;
 
-  tbb::concurrent_bounded_queue<OpticalFlowInput::Ptr> input_queue;
-  tbb::concurrent_bounded_queue<OpticalFlowResult::Ptr>* output_queue = nullptr;
+  RobotA::utils::ThreadSafeQueue<OpticalFlowInput::Ptr> input_queue;
+  RobotA::utils::ThreadSafeQueue<OpticalFlowResult::Ptr>* output_queue = nullptr;
 
   Eigen::MatrixXf patch_coord;
 };

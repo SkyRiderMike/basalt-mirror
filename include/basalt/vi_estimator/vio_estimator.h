@@ -39,6 +39,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <basalt/optical_flow/optical_flow.h>
 #include <basalt/utils/imu_types.h>
 
+#include <toolbox/utils/thread_safe_queue.h>
+
 namespace basalt {
 
 struct VioVisualizationData {
@@ -76,7 +78,7 @@ class VioEstimatorBase {
   std::atomic<int64_t> last_processed_t_ns;
   std::atomic<bool> finished;
 
-  tbb::concurrent_bounded_queue<OpticalFlowResult::Ptr> vision_data_queue;
+  RobotA::utils::ThreadSafeQueue<OpticalFlowResult::Ptr> vision_data_queue;
   tbb::concurrent_bounded_queue<ImuData::Ptr> imu_data_queue;
 
   tbb::concurrent_bounded_queue<PoseVelBiasState::Ptr>* out_state_queue =

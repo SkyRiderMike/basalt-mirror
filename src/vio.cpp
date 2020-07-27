@@ -161,11 +161,11 @@ void feed_images() {
 
     timestamp_to_id[data->t_ns] = i;
 
-    opt_flow_ptr->input_queue.push(data);
+    opt_flow_ptr->input_queue.push_block(data);
   }
 
   // Indicate the end of the sequence
-  opt_flow_ptr->input_queue.push(nullptr);
+  opt_flow_ptr->input_queue.push_block(nullptr);
 
   std::cout << "Finished input_data thread " << std::endl;
 }

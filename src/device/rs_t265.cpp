@@ -179,7 +179,7 @@ void RsT265Device::start() {
       }
 
       last_img_data = data;
-      if (image_data_queue) image_data_queue->push(data);
+      if (image_data_queue) image_data_queue->push_block(data);
 
     } else if (auto pf = frame.as<rs2::pose_frame>()) {
       auto data = pf.get_pose_data();
@@ -202,7 +202,7 @@ void RsT265Device::start() {
 }
 
 void RsT265Device::stop() {
-  if (image_data_queue) image_data_queue->push(nullptr);
+  if (image_data_queue) image_data_queue->push_block(nullptr);
   if (imu_data_queue) imu_data_queue->push(nullptr);
 }
 

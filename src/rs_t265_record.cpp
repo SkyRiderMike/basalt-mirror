@@ -70,7 +70,7 @@ pangolin::Var<int> webp_quality("ui.webp_quality", 90, 0, 101);
 pangolin::Var<int> skip_frames("ui.skip_frames", 1, 1, 10);
 pangolin::Var<float> exposure("ui.exposure", 5.0, 1, 20);
 
-tbb::concurrent_bounded_queue<basalt::OpticalFlowInput::Ptr> image_data_queue,
+RobotA::utils::ThreadSafeQueue<basalt::OpticalFlowInput::Ptr> image_data_queue,
     image_data_queue2;
 tbb::concurrent_bounded_queue<basalt::ImuData::Ptr> imu_data_queue;
 tbb::concurrent_bounded_queue<basalt::RsPoseData> pose_data_queue;
@@ -111,7 +111,7 @@ void exposure_save_worker() {
                               << std::endl;
       }
 
-      image_data_queue2.push(img);
+      image_data_queue2.push_block(img);
     } else {
       std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
