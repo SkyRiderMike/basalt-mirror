@@ -97,8 +97,8 @@ inline void findInliersEssential(const KeypointsData& kd1,
   }
 }
 
-void findInliersRansac(const KeypointsData& kd1, const KeypointsData& kd2,
-                       const double ransac_thresh, const int ransac_min_inliers,
-                       MatchData& md);
+// void findInliersRansac(const KeypointsData& kd1, const KeypointsData& kd2,
+//                        const double ransac_thresh, const int ransac_min_inliers,
+//                        MatchData& md);
 
 }  // namespace basalt

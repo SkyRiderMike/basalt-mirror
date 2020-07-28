@@ -243,7 +243,7 @@ add_library(basalt SHARED
   src/vi_estimator/keypoint_vo.cpp
   src/vi_estimator/vio_estimator.cpp
   src/vi_estimator/ba_base.cpp
-  src/vi_estimator/nfr_mapper.cpp
+  # src/vi_estimator/nfr_mapper.cpp
   src/vi_estimator/landmark_database.cpp
   src/utils/keypoints.cpp)
 
@@ -251,7 +251,8 @@ add_library(basalt SHARED
 target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS} 
                       ${TOOLBOX_LIBRARIES} 
                       PRIVATE rosbag 
-                      opengv)
+                      # opengv
+                      )
 
 
 # add_executable(basalt_calibrate src/calibrate.cpp src/calibration/cam_calib.cpp)
@@ -264,14 +265,14 @@ target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS
 add_executable(basalt_vio_sim src/vio_sim.cpp)
 target_link_libraries(basalt_vio_sim basalt pangolin)
 
-add_executable(basalt_mapper_sim src/mapper_sim.cpp)
-target_link_libraries(basalt_mapper_sim basalt pangolin)
+# add_executable(basalt_mapper_sim src/mapper_sim.cpp)
+# target_link_libraries(basalt_mapper_sim basalt pangolin)
 
-add_executable(basalt_mapper_sim_naive src/mapper_sim_naive.cpp)
-target_link_libraries(basalt_mapper_sim_naive basalt pangolin)
+# add_executable(basalt_mapper_sim_naive src/mapper_sim_naive.cpp)
+# target_link_libraries(basalt_mapper_sim_naive basalt pangolin)
 
-add_executable(basalt_mapper src/mapper.cpp)
-target_link_libraries(basalt_mapper basalt pangolin)
+# add_executable(basalt_mapper src/mapper.cpp)
+# target_link_libraries(basalt_mapper basalt pangolin)
 
 
 add_executable(basalt_opt_flow src/opt_flow.cpp)
@@ -301,9 +302,9 @@ install(TARGETS
       # basalt_calibrate 
       # basalt_calibrate_imu 
       basalt_vio_sim 
-      basalt_mapper_sim 
-      basalt_mapper_sim_naive 
-      basalt_mapper 
+      # basalt_mapper_sim 
+      # basalt_mapper_sim_naive 
+      # basalt_mapper 
       basalt_opt_flow 
       basalt_vio 
       basalt_kitti_eval 
@@ -335,7 +336,7 @@ macro(install)
 endmacro()
 # Include subproject (or any other CMake code) with "disabled" install().
 enable_testing()
-add_subdirectory(thirdparty/basalt-headers/test)
+# add_subdirectory(thirdparty/basalt-headers/test)
 add_subdirectory(test)
 # Restore original install() behavior.
 macro(install)

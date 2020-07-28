@@ -631,8 +631,8 @@ void NfrMapper::match_all() {
       if (int(md.matches.size()) > config.mapper_min_matches) {
         matched++;
 
-        findInliersRansac(f1, f2, config.mapper_ransac_threshold,
-                          config.mapper_min_matches, md);
+        // findInliersRansac(f1, f2, config.mapper_ransac_threshold,
+        //                   config.mapper_min_matches, md);
       }
 
       if (!md.inliers.empty()) feature_matches[std::make_pair(id1, id2)] = md;

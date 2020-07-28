@@ -24,7 +24,7 @@ macro(add_definitions)
     _add_definitions(${ARGN})
   endif()
 endmacro()
-add_subdirectory(opengv EXCLUDE_FROM_ALL)
+# add_subdirectory(opengv EXCLUDE_FROM_ALL)
 
 # Hack to disable CPack in Pangolin.
 macro(include)
@@ -39,15 +39,15 @@ add_subdirectory(Pangolin EXCLUDE_FROM_ALL)
 # target_compile_options(apriltag PRIVATE "-Wno-unused-private-field")
 
 # fix opengv: c++17 and debug postfix
-set_target_properties(opengv PROPERTIES
-  CXX_STANDARD 17
-  DEBUG_POSTFIX "")
+# set_target_properties(opengv PROPERTIES
+#   CXX_STANDARD 17
+#   DEBUG_POSTFIX "")
 
-# fix opengv: compile options (CMAKE_CXX_FLAGS is overwritten by Opengv)
-target_compile_options(opengv PRIVATE
-  -Wno-unused-private-field
-  -march=${CXX_MARCH}
-  ${BASALT_PASSED_CXX_FLAGS})
+# # fix opengv: compile options (CMAKE_CXX_FLAGS is overwritten by Opengv)
+# target_compile_options(opengv PRIVATE
+#   -Wno-unused-private-field
+#   -march=${CXX_MARCH}
+#   ${BASALT_PASSED_CXX_FLAGS})
 
 # TODO: enable once mpark issue is fixed upstream pangolin
 #set_target_properties(pangolin PROPERTIES
@@ -90,7 +90,7 @@ endif()
 
 # check here the directories for the pangolin and opengv targets, and
 # confirm that the eigen-related include dirs match.
-foreach(_target opengv pangolin)
+foreach(_target pangolin)
   get_target_property(_include_dirs ${_target} INTERFACE_INCLUDE_DIRECTORIES)
   foreach(_dir IN LISTS _include_dirs)
     if("${_dir}" MATCHES ".*/eigen3?(/unsupported)?$")
@@ -106,7 +106,7 @@ endforeach()
 # source folder. Thus, we update the property to only include these
 # eigen paths in the "BUILD_INTERFACE" (not "INSTALL").
 if (EIGEN3_INCLUDE_DIR MATCHES "^${CMAKE_SOURCE_DIR}.*")
-  foreach(_target opengv pangolin)
+  foreach(_target pangolin)
     get_target_property(_include_dirs ${_target} INTERFACE_INCLUDE_DIRECTORIES)
     set(_include_dirs_new "")
     foreach(_dir IN LISTS _include_dirs)
