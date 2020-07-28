@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-include("thirdparty/basalt-headers/cmake_modules/PreProjectWorkarounds.cmake")
+# include("thirdparty/basalt-headers/cmake_modules/PreProjectWorkarounds.cmake")
 
 project(basalt)
 
@@ -200,7 +200,7 @@ set(CMAKE_CXX_FLAGS "${BASALT_CXX_FLAGS} -march=${CXX_MARCH} ${BASALT_PASSED_CXX
 
 
 set(EIGEN_INCLUDE_DIR_HINTS ${EIGEN_ROOT})
-find_package(Eigen3 3.3.7 EXACT REQUIRED MODULE)
+find_package(Eigen3 REQUIRED MODULE)
 include_directories(${EIGEN3_INCLUDE_DIR})
 message(STATUS "Found Eigen headers in: ${EIGEN3_INCLUDE_DIR}")
 if(NOT EIGEN3_INCLUDE_DIR MATCHES "^${EIGEN_ROOT}")
@@ -227,7 +227,7 @@ link_directories(${TOOLBOX_LINK_DIRS})
 add_subdirectory(thirdparty)
 
 
-include_directories(thirdparty/basalt-headers/include)
+# include_directories(thirdparty/basalt-headers/include)
 include_directories(thirdparty/fast/include)
 
 include_directories(include)
