@@ -213,7 +213,7 @@ class CalibGyroBias {
   }
 
  private:
-  Eigen::Matrix<Scalar, 12, 1> gyro_bias_full;
+  Eigen::Matrix<Scalar, 12, 1> gyro_bias_full;/* intrinisc 9 dim for scale and axid_misalign + 3 bias */
 };
 
 }  // namespace basalt

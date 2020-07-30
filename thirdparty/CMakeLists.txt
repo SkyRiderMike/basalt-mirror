@@ -36,22 +36,7 @@ add_subdirectory(Pangolin EXCLUDE_FROM_ALL)
 
 
 # fix aprilgrid
-# target_compile_options(apriltag PRIVATE "-Wno-unused-private-field")
 
-# fix opengv: c++17 and debug postfix
-# set_target_properties(opengv PROPERTIES
-#   CXX_STANDARD 17
-#   DEBUG_POSTFIX "")
-
-# # fix opengv: compile options (CMAKE_CXX_FLAGS is overwritten by Opengv)
-# target_compile_options(opengv PRIVATE
-#   -Wno-unused-private-field
-#   -march=${CXX_MARCH}
-#   ${BASALT_PASSED_CXX_FLAGS})
-
-# TODO: enable once mpark issue is fixed upstream pangolin
-#set_target_properties(pangolin PROPERTIES
-#  CXX_STANDARD 17)
 
 # fix pangolin: gcc
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")

@@ -199,11 +199,11 @@ endif()
 set(CMAKE_CXX_FLAGS "${BASALT_CXX_FLAGS} -march=${CXX_MARCH} ${BASALT_PASSED_CXX_FLAGS}")
 
 
-set(EIGEN_INCLUDE_DIR_HINTS ${EIGEN_ROOT})
+# set(EIGEN_INCLUDE_DIR_HINTS ${EIGEN_ROOT})
 find_package(Eigen3 REQUIRED MODULE)
-include_directories(${EIGEN3_INCLUDE_DIR})
-message(STATUS "Found Eigen headers in: ${EIGEN3_INCLUDE_DIR}")
-if(NOT EIGEN3_INCLUDE_DIR MATCHES "^${EIGEN_ROOT}")
+include_directories(${EIGEN3_INCLUDE_DIRS})
+message(STATUS "Found Eigen headers in: ${EIGEN3_INCLUDE_DIRS}")
+if(NOT EIGEN3_INCLUDE_DIRS MATCHES "^${EIGEN_ROOT}")
   message(WARNING "Found Eigen headers are outside of specified EIGEN_ROOT '${EIGEN_ROOT}'")
 endif()
 
@@ -224,11 +224,12 @@ find_package(TOOLBOX REQUIRED)
 include_directories(${TOOLBOX_INCLUDE_DIRS})
 link_directories(${TOOLBOX_LINK_DIRS})
 
-add_subdirectory(thirdparty)
+add_subdirectory(thirdparty/Pangolin)
+add_subdirectory(thirdparty/ros)
 
 
 # include_directories(thirdparty/basalt-headers/include)
-include_directories(thirdparty/fast/include)
+include_directories(thirdparty/Pangolin/include)
 
 include_directories(include)
 

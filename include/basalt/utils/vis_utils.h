@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #pragma once
 
-#include <Eigen/Dense>
+#include <eigen3/Eigen/Dense>
 
 #include <pangolin/gl/gldraw.h>
 
