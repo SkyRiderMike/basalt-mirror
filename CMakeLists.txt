@@ -6,10 +6,6 @@ project(basalt)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/" ${CMAKE_MODULE_PATH})
 
-if(NOT EIGEN_ROOT)
-  set(EIGEN_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/basalt-headers/thirdparty/eigen")
-endif()
-
 string(TOLOWER "${PROJECT_NAME}" PROJECT_NAME_LOWERCASE)
 find_program(DPKG_PROGRAM dpkg DOC "dpkg program of Debian-based systems")
 if(DPKG_PROGRAM)
@@ -224,12 +220,11 @@ find_package(TOOLBOX REQUIRED)
 include_directories(${TOOLBOX_INCLUDE_DIRS})
 link_directories(${TOOLBOX_LINK_DIRS})
 
-add_subdirectory(thirdparty/Pangolin)
-add_subdirectory(thirdparty/ros)
+find_package(Pangolin REQUIRED)
+include_directories(${Pangolin_INCLUDE_DIRS})
 
+# add_subdirectory(thirdparty/ros)
 
-# include_directories(thirdparty/basalt-headers/include)
-include_directories(thirdparty/Pangolin/include)
 
 include_directories(include)
 
@@ -251,7 +246,9 @@ add_library(basalt SHARED
 
 target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS} 
                       ${TOOLBOX_LIBRARIES} 
-                      PRIVATE rosbag 
+                      ${Pangolin_LIBRARIES}
+                      PRIVATE 
+                      # rosbag 
                       # opengv
                       )
 
@@ -338,7 +335,7 @@ endmacro()
 # Include subproject (or any other CMake code) with "disabled" install().
 enable_testing()
 # add_subdirectory(thirdparty/basalt-headers/test)
-add_subdirectory(test)
+# add_subdirectory(test)
 # Restore original install() behavior.
 macro(install)
   _install(${ARGN})
