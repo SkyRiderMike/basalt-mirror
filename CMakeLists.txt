@@ -241,6 +241,7 @@ add_library(basalt SHARED
   src/vi_estimator/ba_base.cpp
   # src/vi_estimator/nfr_mapper.cpp
   src/vi_estimator/landmark_database.cpp
+  src/vio_viewer/vio_viewer.cpp
   src/utils/keypoints.cpp)
 
 
@@ -262,6 +263,9 @@ target_link_libraries(basalt PUBLIC ${TBB_LIBRARIES} ${STD_CXX_FS} ${OpenCV_LIBS
 
 add_executable(basalt_vio_sim src/vio_sim.cpp)
 target_link_libraries(basalt_vio_sim basalt pangolin)
+
+add_executable(viewer_test src/viewer.cpp)
+target_link_libraries(viewer_test basalt pangolin)
 
 # add_executable(basalt_mapper_sim src/mapper_sim.cpp)
 # target_link_libraries(basalt_mapper_sim basalt pangolin)
